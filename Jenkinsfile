@@ -11,6 +11,13 @@ pipeline {
                 sh 'mvn test'
             }
         }
+        stage('SonarQube Analysis') {
+            steps {
+                withSonarQubeEnv('SonarQube') {
+                    sh 'mvn sonar:sonar'
+                }
+            }
+        }
         stage('Deploy') {
             steps {
                 sh 'docker-compose up -d'
